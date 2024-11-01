@@ -21,3 +21,9 @@ const links = document.querySelectorAll('.titles a');
 for (let link of links) {
     link.addEventListener('click', titleClickHandler);
 }
+
+const activeArticles = document.querySelectorAll('.posts .post.active');
+
+for (let activeArticle of activeArticles) {
+    activeArticle.classList.remove('active');
+}
