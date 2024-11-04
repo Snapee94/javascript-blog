@@ -3,7 +3,6 @@
 function titleClickHandler(event) {
     event.preventDefault();
     const clickedElement = this;
-    console.log('Link was clicked!');
 
     const activeLinks = document.querySelectorAll('.titles a.active');
     for (let activeLink of activeLinks) {
@@ -25,8 +24,22 @@ function titleClickHandler(event) {
     }
 }
 
-const links = document.querySelectorAll('.titles a');
+function generateTitleLinks() {
+    const titleList = document.querySelector('.titles');
+    titleList.innerHTML = '';
 
-for (let link of links) {
-    link.addEventListener('click', titleClickHandler);
+    const articles = document.querySelectorAll('.post');
+    for (let article of articles) {
+        const articleId = article.getAttribute('id');
+        const articleTitle = article.querySelector('.post-title').innerHTML;
+        const linkHTML = `<li><a href="#${articleId}"><span>${articleTitle}</span></a></li>`;
+        titleList.innerHTML += linkHTML;
+    }
+
+    const links = document.querySelectorAll('.titles a');
+    for (let link of links) {
+        link.addEventListener('click', titleClickHandler);
+    }
 }
+
+generateTitleLinks();
