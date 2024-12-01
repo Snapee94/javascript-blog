@@ -30,6 +30,8 @@ function generateTitleLinks(author = '', tag = '') {
 
     const articles = document.querySelectorAll('.post');
 
+    let firstVisibleArticle = null;
+
     for (let article of articles) {
         const articleId = article.getAttribute('id');
         const articleTitle = article.querySelector('.post-title').innerHTML;
@@ -40,10 +42,24 @@ function generateTitleLinks(author = '', tag = '') {
         if ((author === '' || articleAuthor === author) && (tag === '' || articleTags.includes(tag))) {
             const linkHTML = `<li><a href="#${articleId}"><span>${articleTitle}</span></a></li>`;
             titleList.innerHTML += linkHTML;
+
+            if (!firstVisibleArticle) {
+                firstVisibleArticle = article;
+            }
+        }
+    }
+
+    for (let article of articles) {
+        if (article === firstVisibleArticle) {
             article.classList.add('active');
         } else {
             article.classList.remove('active');
         }
+    }
+
+    const links = titleList.querySelectorAll('a');
+    for (let link of links) {
+        link.addEventListener('click', titleClickHandler);
     }
 }
 
